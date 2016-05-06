@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:textColor="?android:textColorPrimary"
+        android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold" />
 
     <TextView
@@ -22,7 +22,8 @@
         android:paddingLeft="@dimen/spacing"
         android:paddingRight="@dimen/spacing"
         android:singleLine="true"
+        android:textStyle="italic"
         android:text="@string/user_action_typing"
-        android:textColor="?android:textColorSecondary" />
+        android:textColor="@color/black_tr8" />
 
 </LinearLayout>

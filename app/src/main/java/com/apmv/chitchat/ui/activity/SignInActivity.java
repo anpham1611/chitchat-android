@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
-public class SignInActivity extends PrimaryActivity {
+public class SignInActivity extends SecondaryActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private SignInActivityUiController uiController;
     private Context mContext;

@@ -35,7 +35,7 @@
         <activity
             android:name="com.apmv.chitchat.ui.activity.SignInActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/PrimaryActivity"
+            android:theme="@style/SecondaryActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
 
     </application>
