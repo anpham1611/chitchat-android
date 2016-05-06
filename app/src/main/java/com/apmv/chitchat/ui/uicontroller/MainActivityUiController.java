@@ -2,6 +2,7 @@ package com.apmv.chitchat.ui.uicontroller;
 
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.apmv.chitchat.R;
 import com.apmv.chitchat.ui.activity.MainActivity;
@@ -29,7 +30,11 @@ public class MainActivityUiController implements View.OnClickListener {
 
     private void init() {
         initToolbar();
-        fgMessageContent = (MessageFragment) activity.getSupportFragmentManager().findFragmentById(R.id.fgMessageContent);
+        fgMessageContent = new MessageFragment();
+        activity.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fgMessageContent, fgMessageContent)
+                .commit();
+//        fgMessageContent = (MessageFragment) activity.getSupportFragmentManager().findFragmentById(R.id.fgMessageContent);
     }
 
     private void initToolbar() {

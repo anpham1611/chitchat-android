@@ -40,7 +40,7 @@ public class SignInActivityUiController implements View.OnClickListener, TextVie
     }
 
     private void initToolbar() {
-        toolbar.setTitle(activity.getStringResource(R.string.title_activity_login));
+        toolbar.setTitle(activity.getStringResource(R.string.message_welcome));
     }
 
     @Override

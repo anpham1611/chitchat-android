@@ -35,6 +35,8 @@
         android:maxLength="14"
         android:maxLines="1"
         android:singleLine="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:textColor="@color/colorPrimaryDark" />
 
     <ImageView
@@ -42,7 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/username_input"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_launcher" />
 
     <Button
         android:id="@+id/sign_in_button"

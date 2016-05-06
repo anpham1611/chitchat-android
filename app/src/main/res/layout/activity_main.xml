@@ -21,9 +21,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/fgMessageContent"
-        class="com.apmv.chitchat.ui.widget.MessageFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/appBarLayout" />
