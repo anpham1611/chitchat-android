@@ -1,27 +1,50 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:paddingTop="@dimen/spacing">
 
     <TextView
         android:id="@+id/username"
         style="?android:textAppearanceMedium"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/width_name"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/message_padding"
         android:singleLine="true"
-        android:text="text"
+        android:text=""
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/message"
-        style="?android:textAppearanceMedium"
+        android:id="@+id/time"
+        style="?android:textAppearanceSmall"
+        android:layout_width="@dimen/width_time"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/margin_time_top"
+        android:paddingLeft="@dimen/spacing"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="@color/black_tr8" />
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/spacing"
-        android:paddingRight="@dimen/spacing"
-        android:text="text"
-        android:textColor="@color/black" />
+        android:layout_toLeftOf="@id/time"
+        android:layout_toRightOf="@id/username">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/message"
+            style="?android:textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_message"
+            android:paddingBottom="@dimen/message_padding"
+            android:paddingLeft="@dimen/message_padding_width"
+            android:paddingRight="@dimen/message_padding_width"
+            android:paddingTop="@dimen/message_padding"
+            android:text=""
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

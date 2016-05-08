@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.apmv.chitchat.App;
 import com.apmv.chitchat.R;
+import com.apmv.chitchat.helper.Constants;
+import com.apmv.chitchat.helper.SharedPreferenceUtils;
 import com.apmv.chitchat.ui.uicontroller.SignInActivityUiController;
 
 import org.json.JSONException;
@@ -67,6 +69,9 @@ public class SignInActivity extends SecondaryActivity {
 
         // perform the user login attempt.
         mSocket.emit("add user", username);
+
+        // Save
+        SharedPreferenceUtils.saveString(Constants.NICK_NAME, username);
     }
 
     private Emitter.Listener onLogin = new Emitter.Listener() {

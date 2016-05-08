@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.apmv.chitchat.R;
+import com.apmv.chitchat.helper.Constants;
+import com.apmv.chitchat.helper.SharedPreferenceUtils;
+import com.apmv.chitchat.helper.Utils;
 import com.apmv.chitchat.ui.widget.Message;
 
 import java.util.List;
@@ -16,6 +19,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private List<Message> mMessages;
     private int[] mUsernameColors;
+    private Message mLastMessage;
 
     public MessageAdapter(Context context, List<Message> messages) {
         mMessages = messages;
@@ -28,6 +32,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         switch (viewType) {
         case Message.TYPE_MESSAGE:
             layout = R.layout.item_message;
+            break;
+        case Message.TYPE_MESSAGE_ME:
+            layout = R.layout.item_message_me;
             break;
         case Message.TYPE_LOG:
             layout = R.layout.item_log;
@@ -45,8 +52,44 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         Message message = mMessages.get(position);
-        viewHolder.setMessage(message.getMessage());
-        viewHolder.setUsername(message.getUsername());
+
+        // Username
+        boolean canShowName = true;
+        if (mLastMessage != null
+                && mLastMessage.getUsername() != null
+                && message.getUsername() != null
+                && mLastMessage.getUsername().equals(message.getUsername())) {
+            canShowName = false;
+        }
+        if (canShowName && message.getUsername() != null)
+            viewHolder.setUsername(message.getUsername());
+
+        // Message
+        if (message.getMessage() != null)
+            viewHolder.setMessage(message.getMessage());
+
+        // Time
+        boolean canShowTime = true;
+        String time = null;
+        if (canShowTime && message.getTime() != null)
+            time = Utils.showTime(message.getTime());
+        if (mLastMessage != null
+                && mLastMessage.getUsername() != null
+                && message.getUsername() != null
+                && mLastMessage.getUsername().equals(message.getUsername())) {
+            if (time != null) {
+                String timeLast = Utils.showTime(mLastMessage.getTime());
+                if (time.equals(timeLast)) {
+                    canShowTime = false;
+                }
+            }
+        }
+        if (canShowTime && time != null)
+            viewHolder.setTime(time);
+
+        // Save last message
+        if (message.getType() == Message.TYPE_MESSAGE || message.getType() == Message.TYPE_MESSAGE_ME)
+            mLastMessage = message;
     }
 
     @Override
@@ -62,12 +105,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mUsernameView;
         private TextView mMessageView;
+        private TextView mTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             mUsernameView = (TextView) itemView.findViewById(R.id.username);
             mMessageView = (TextView) itemView.findViewById(R.id.message);
+            mTime = (TextView) itemView.findViewById(R.id.time);
         }
 
         public void setUsername(String username) {
@@ -79,6 +124,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public void setMessage(String message) {
             if (null == mMessageView) return;
             mMessageView.setText(message);
+        }
+
+        public void setTime(String time) {
+            if (null == mTime) return;
+            mTime.setText(time);
         }
 
         private int getUsernameColor(String username) {

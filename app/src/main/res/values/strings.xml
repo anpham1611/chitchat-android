@@ -1,26 +1,26 @@
 <resources>
     <string name="app_name">Chit Chat</string>
-    <string name="processing">Processing...</string>
-    <string name="action_leave">Leave</string>
-    <string name="action_send">Send</string>
-    <string name="prompt_message">Message</string>
-    <string name="error_connect">Failed to connect</string>
+    <string name="processing">Đang chạy...</string>
+    <string name="action_leave">Rời khỏi</string>
+    <string name="action_send">Gửi</string>
+    <string name="prompt_message">Nhập tin nhắn</string>
+    <string name="error_connect">Kết nối tới máy chủ thất bại</string>
 
     <!-- Messages -->
-    <string name="message_welcome">Welcome to Chit Chat</string>
+    <string name="message_welcome">.:: Welcome to Chit Chat</string>
     <plurals name="message_participants">
-        <item quantity="one">there\'s %d participant</item>
-        <item quantity="other">there are %d participants</item>
+        <item quantity="one">có %d người tham gia</item>
+        <item quantity="other">có %d người tham gia</item>
     </plurals>
-    <string name="message_user_joined">%s joined</string>
-    <string name="message_user_left">%s left</string>
-    <string name="user_action_typing">is typing</string>
+    <string name="message_user_joined">%s đã tham gia</string>
+    <string name="message_user_left">%s đã rời khỏi</string>
+    <string name="user_action_typing">đang soạn...</string>
 
     <!-- Strings related to login -->
-    <string name="title_activity_login">Join</string>
-    <string name="prompt_username">What\'s your nickname?</string>
-    <string name="action_sign_in">Join</string>
-    <string name="action_sign_in_short">Join</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="title_activity_login">Tham gia</string>
+    <string name="prompt_username">Nickname của bạn là gì?</string>
+    <string name="action_sign_in">Tham gia</string>
+    <string name="action_sign_in_short">Tham gia</string>
+    <string name="error_field_required">Vui lòng nhập Nickname của bạn</string>
 
 </resources>

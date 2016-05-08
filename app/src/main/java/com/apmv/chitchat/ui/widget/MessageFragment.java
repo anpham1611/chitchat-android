@@ -33,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.socket.client.Socket;
@@ -206,9 +207,9 @@ public class MessageFragment extends Fragment {
         addLog(getResources().getQuantityString(R.plurals.message_participants, numUsers, numUsers));
     }
 
-    private void addMessage(String username, String message) {
-        mMessages.add(new Message.Builder(Message.TYPE_MESSAGE)
-                .username(username).message(message).build());
+    private void addMessage(String username, String message, String time) {
+        mMessages.add(new Message.Builder(mUsername.equals(username) ? Message.TYPE_MESSAGE_ME : Message.TYPE_MESSAGE)
+                .username(username).message(message).time(time).build());
         mAdapter.notifyItemInserted(mMessages.size() - 1);
         scrollToBottom();
     }
@@ -243,10 +244,18 @@ public class MessageFragment extends Fragment {
         }
 
         mInputMessageView.setText("");
-        addMessage(mUsername, message);
+        String time = String.valueOf(new Date().getTime());
+        addMessage(mUsername, message, time);
 
         // perform the sending message attempt.
-        mSocket.emit("new message", message);
+        JSONObject messageObj = new JSONObject();
+        try {
+            messageObj.put("message", message);
+            messageObj.put("time", time);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mSocket.emit("new message", messageObj);
     }
 
     private void startSignIn() {
@@ -288,15 +297,17 @@ public class MessageFragment extends Fragment {
                     JSONObject data = (JSONObject) args[0];
                     String username;
                     String message;
+                    String time;
                     try {
                         username = data.getString("username");
                         message = data.getString("message");
+                        time = data.getString("time");
                     } catch (JSONException e) {
                         return;
                     }
 
                     removeTyping(username);
-                    addMessage(username, message);
+                    addMessage(username, message, time);
                 }
             });
         }
