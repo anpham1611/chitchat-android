@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -148,7 +149,7 @@ public class MessageFragment extends Fragment {
             }
         });
 
-        ImageButton sendButton = (ImageButton) view.findViewById(R.id.send_button);
+        ImageView sendButton = (ImageView) view.findViewById(R.id.send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
