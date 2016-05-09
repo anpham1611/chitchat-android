@@ -18,7 +18,7 @@
 
         <meta-data
             android:name="API_SCHEME"
-            android:value="https" />
+            android:value="" />
         <meta-data
             android:name="API_DOMAIN"
             android:value="" />

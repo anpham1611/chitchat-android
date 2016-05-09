@@ -7,7 +7,7 @@
     <string name="error_connect">Kết nối tới máy chủ thất bại</string>
 
     <!-- Messages -->
-    <string name="message_welcome">.:: Welcome to Chit Chat</string>
+    <string name="message_welcome">.::Welcome to Chit Chat</string>
     <plurals name="message_participants">
         <item quantity="one">có %d người tham gia</item>
         <item quantity="other">có %d người tham gia</item>
