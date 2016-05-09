@@ -54,15 +54,32 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Message message = mMessages.get(position);
 
         // Username
-        boolean canShowName = true;
-        if (mLastMessage != null
-                && mLastMessage.getUsername() != null
-                && message.getUsername() != null
-                && mLastMessage.getUsername().equals(message.getUsername())) {
-            canShowName = false;
-        }
-        if (canShowName && message.getUsername() != null)
+        int type = message.getType();
+        if (Message.TYPE_ACTION == type) {
             viewHolder.setUsername(message.getUsername());
+
+        } else if (Message.TYPE_MESSAGE == type || Message.TYPE_MESSAGE_ME == type) {
+            boolean canShowName = true;
+            if (mLastMessage != null
+                    && mLastMessage.getUsername() != null
+                    && message.getUsername() != null
+                    && mLastMessage.getUsername().equals(message.getUsername())) {
+                canShowName = false;
+            }
+            if (canShowName && message.getUsername() != null) {
+                if (viewHolder.mAvatarView != null)
+                    viewHolder.mAvatarView.setVisibility(View.VISIBLE);
+                if (viewHolder.mUsernameView != null)
+                    viewHolder.mUsernameView.setVisibility(View.VISIBLE);
+                viewHolder.setUsername(message.getUsername());
+                viewHolder.setAvatar(message.getUsername().substring(0, 1));
+            } else {
+                if (viewHolder.mAvatarView != null)
+                    viewHolder.mAvatarView.setVisibility(View.INVISIBLE);
+                if (viewHolder.mUsernameView != null)
+                    viewHolder.mUsernameView.setVisibility(View.GONE);
+            }
+        }
 
         // Message
         if (message.getMessage() != null)
@@ -74,9 +91,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if (canShowTime && message.getTime() != null)
             time = Utils.showTime(message.getTime());
         if (mLastMessage != null
-                && mLastMessage.getUsername() != null
-                && message.getUsername() != null
-                && mLastMessage.getUsername().equals(message.getUsername())) {
+                && mLastMessage.getTime() != null
+                && time != null) {
             if (time != null) {
                 String timeLast = Utils.showTime(mLastMessage.getTime());
                 if (time.equals(timeLast)) {
@@ -103,22 +119,29 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mUsernameView;
-        private TextView mMessageView;
-        private TextView mTime;
+        public TextView mAvatarView;
+        public TextView mUsernameView;
+        public TextView mMessageView;
+        public TextView mTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            mAvatarView = (TextView) itemView.findViewById(R.id.username_avatar);
             mUsernameView = (TextView) itemView.findViewById(R.id.username);
             mMessageView = (TextView) itemView.findViewById(R.id.message);
             mTime = (TextView) itemView.findViewById(R.id.time);
         }
 
+        public void setAvatar(String shortName) {
+            if (null == mAvatarView) return;
+            mAvatarView.setText(shortName);
+            mAvatarView.setTextColor(getUsernameColor(shortName));
+        }
+
         public void setUsername(String username) {
             if (null == mUsernameView) return;
             mUsernameView.setText(username);
-            mUsernameView.setTextColor(getUsernameColor(username));
+            // mUsernameView.setTextColor(getUsernameColor(username));
         }
 
         public void setMessage(String message) {
