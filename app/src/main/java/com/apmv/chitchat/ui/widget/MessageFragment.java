@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.apmv.chitchat.App;
 import com.apmv.chitchat.R;
+import com.apmv.chitchat.helper.Utils;
 import com.apmv.chitchat.ui.activity.SignInActivity;
 import com.apmv.chitchat.ui.adapter.MessageAdapter;
 
@@ -307,8 +308,8 @@ public class MessageFragment extends Fragment {
                     } catch (JSONException e) {
                         return;
                     }
-
                     removeTyping(username);
+                    Utils.playNotificationSound(getContext());
                     addMessage(username, message, time);
                 }
             });
