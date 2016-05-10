@@ -3,12 +3,19 @@
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/message_margin">
 
+    <View
+        android:id="@+id/stable_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_message_top"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/time"
         style="?android:textAppearanceSmall"
         android:layout_width="@dimen/width_time"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_below="@id/stable_bottom_line"
         android:layout_marginTop="@dimen/margin_time_top"
         android:paddingLeft="@dimen/spacing"
         android:singleLine="true"
@@ -20,14 +27,15 @@
         style="?android:textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/stable_bottom_line"
         android:layout_marginLeft="@dimen/spacing"
         android:layout_toLeftOf="@id/time"
-        android:gravity="right"
         android:background="@drawable/bg_message_me"
+        android:gravity="right"
+        android:paddingBottom="@dimen/message_padding"
         android:paddingLeft="@dimen/message_padding_width"
         android:paddingRight="@dimen/message_padding_width"
         android:paddingTop="@dimen/message_padding"
-        android:paddingBottom="@dimen/message_padding"
         android:text=""
         android:textColor="@color/black" />
 

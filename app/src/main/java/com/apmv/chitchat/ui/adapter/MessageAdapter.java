@@ -23,25 +23,37 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public MessageAdapter(Context context, List<Message> messages) {
         mMessages = messages;
-        mUsernameColors = context.getResources().getIntArray(R.array.username_colors);
+        mUsernameColors = new int[12];
+        mUsernameColors[0] = R.drawable.bg_avatar_0;
+        mUsernameColors[1] = R.drawable.bg_avatar_1;
+        mUsernameColors[2] = R.drawable.bg_avatar_2;
+        mUsernameColors[3] = R.drawable.bg_avatar_3;
+        mUsernameColors[4] = R.drawable.bg_avatar_4;
+        mUsernameColors[5] = R.drawable.bg_avatar_5;
+        mUsernameColors[6] = R.drawable.bg_avatar_6;
+        mUsernameColors[7] = R.drawable.bg_avatar_7;
+        mUsernameColors[8] = R.drawable.bg_avatar_8;
+        mUsernameColors[9] = R.drawable.bg_avatar_9;
+        mUsernameColors[10] = R.drawable.bg_avatar_10;
+        mUsernameColors[11] = R.drawable.bg_avatar_11;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layout = -1;
         switch (viewType) {
-        case Message.TYPE_MESSAGE:
-            layout = R.layout.item_message;
-            break;
-        case Message.TYPE_MESSAGE_ME:
-            layout = R.layout.item_message_me;
-            break;
-        case Message.TYPE_LOG:
-            layout = R.layout.item_log;
-            break;
-        case Message.TYPE_ACTION:
-            layout = R.layout.item_action;
-            break;
+            case Message.TYPE_MESSAGE:
+                layout = R.layout.item_message;
+                break;
+            case Message.TYPE_MESSAGE_ME:
+                layout = R.layout.item_message_me;
+                break;
+            case Message.TYPE_LOG:
+                layout = R.layout.item_log;
+                break;
+            case Message.TYPE_ACTION:
+                layout = R.layout.item_action;
+                break;
         }
         View v = LayoutInflater
                 .from(parent.getContext())
@@ -67,15 +79,27 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 canShowName = false;
             }
             if (canShowName && message.getUsername() != null) {
+                viewHolder.mStableBottomLine.setVisibility(View.VISIBLE);
                 if (viewHolder.mAvatarView != null)
                     viewHolder.mAvatarView.setVisibility(View.VISIBLE);
                 if (viewHolder.mUsernameView != null)
                     viewHolder.mUsernameView.setVisibility(View.VISIBLE);
-                viewHolder.setUsername(message.getUsername());
-                viewHolder.setAvatar(message.getUsername().substring(0, 1));
+
+                String userName = message.getUsername();
+                viewHolder.setUsername(userName);
+                String[] nameArr = userName.split(" ");
+                String name;
+                if (nameArr.length > 1) {
+                    name = nameArr[0].substring(0, 1);
+                    name += nameArr[1].substring(0, 1);
+                } else {
+                    name = nameArr[0].substring(0, 1);
+                }
+                viewHolder.setAvatar(name);
             } else {
+                viewHolder.mStableBottomLine.setVisibility(View.GONE);
                 if (viewHolder.mAvatarView != null)
-                    viewHolder.mAvatarView.setVisibility(View.INVISIBLE);
+                    viewHolder.mAvatarView.setVisibility(View.GONE);
                 if (viewHolder.mUsernameView != null)
                     viewHolder.mUsernameView.setVisibility(View.GONE);
             }
@@ -123,6 +147,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public TextView mUsernameView;
         public TextView mMessageView;
         public TextView mTime;
+        public View mStableBottomLine;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -130,18 +155,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             mUsernameView = (TextView) itemView.findViewById(R.id.username);
             mMessageView = (TextView) itemView.findViewById(R.id.message);
             mTime = (TextView) itemView.findViewById(R.id.time);
+            mStableBottomLine = (View) itemView.findViewById(R.id.stable_bottom_line);
         }
 
         public void setAvatar(String shortName) {
             if (null == mAvatarView) return;
             mAvatarView.setText(shortName);
-            mAvatarView.setTextColor(getUsernameColor(shortName));
+            mAvatarView.setBackgroundResource(getUsernameColor(shortName));
         }
 
         public void setUsername(String username) {
             if (null == mUsernameView) return;
             mUsernameView.setText(username);
-            // mUsernameView.setTextColor(getUsernameColor(username));
         }
 
         public void setMessage(String message) {

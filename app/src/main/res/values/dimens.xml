@@ -8,6 +8,7 @@
     <dimen name="message_padding">4dp</dimen>
     <dimen name="message_padding_width">8dp</dimen>
     <dimen name="margin_time_top">8dp</dimen>
+    <dimen name="margin_message_top">16dp</dimen>
     <dimen name="width_avatar">50dp</dimen>
     <dimen name="width_time">70dp</dimen>
 </resources>
