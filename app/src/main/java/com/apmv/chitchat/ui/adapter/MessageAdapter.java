@@ -116,7 +116,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             time = Utils.showTime(message.getTime());
         if (mLastMessage != null
                 && mLastMessage.getTime() != null
-                && time != null) {
+                && time != null
+                && mLastMessage.getUsername().equals(message.getUsername())) {
             if (time != null) {
                 String timeLast = Utils.showTime(mLastMessage.getTime());
                 if (time.equals(timeLast)) {
