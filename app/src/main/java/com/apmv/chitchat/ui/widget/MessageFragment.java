@@ -259,6 +259,8 @@ public class MessageFragment extends Fragment {
     }
 
     private void startSignIn() {
+        mMessages.clear();
+        mAdapter.notifyDataSetChanged();
         mUsername = null;
         Intent intent = new Intent(getActivity(), SignInActivity.class);
         startActivityForResult(intent, REQUEST_LOGIN);
