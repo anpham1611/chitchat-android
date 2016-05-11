@@ -216,10 +216,20 @@ public class MessageFragment extends Fragment {
     }
 
     private void addTyping(String username) {
-        mMessages.add(new Message.Builder(Message.TYPE_ACTION)
-                .username(username).build());
-        mAdapter.notifyItemInserted(mMessages.size() - 1);
-        scrollToBottom();
+        boolean canAdd = true;
+        int size = mMessages.size();
+        if (size > 0) {
+            Message lstMessage = mMessages.get(size - 1);
+            if (Message.TYPE_ACTION == lstMessage.getType() && lstMessage.getUsername().equals(username)) {
+                canAdd = false;
+            }
+        }
+        if (canAdd) {
+            mMessages.add(new Message.Builder(Message.TYPE_ACTION)
+                    .username(username).build());
+            mAdapter.notifyItemInserted(mMessages.size() - 1);
+            scrollToBottom();
+        }
     }
 
     private void removeTyping(String username) {
