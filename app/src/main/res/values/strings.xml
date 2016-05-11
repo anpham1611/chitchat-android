@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">Chit Chat</string>
-    <string name="processing">Đang chạy...</string>
+    <string name="processing">Đang kết nối tới máy chủ...</string>
     <string name="action_leave">Rời khỏi</string>
     <string name="action_send">Gửi</string>
     <string name="prompt_message">Nhập tin nhắn</string>
     <string name="error_connect">Kết nối tới máy chủ thất bại</string>
+    <string name="success_title">Thành công</string>
+    <string name="success_connect">Chào mừng bạn tham gia Chit Chat!</string>
+    <string name="close">Đóng</string>
+    <string name="exist">Xác nhận thoát</string>
+    <string name="exist_message">Bạn có chắc muốn thoát?</string>
+    <string name="ok_exist">Đồng ý thoát</string>
 
     <!-- Messages -->
     <string name="message_welcome">.::Welcome to Chit Chat</string>

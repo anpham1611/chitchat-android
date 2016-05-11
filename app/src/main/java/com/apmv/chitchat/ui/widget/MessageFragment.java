@@ -39,6 +39,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
@@ -141,6 +142,12 @@ public class MessageFragment extends Fragment implements TextView.OnEditorAction
 
         addLog(getResources().getString(R.string.message_welcome));
         addParticipantsLog(numUsers);
+
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(getResources().getString(R.string.success_title))
+                .setContentText(getResources().getString(R.string.success_connect))
+                .setConfirmText(getResources().getString(R.string.close))
+                .show();
     }
 
     @Override
@@ -246,10 +253,23 @@ public class MessageFragment extends Fragment implements TextView.OnEditorAction
     }
 
     public void leave() {
-        mUsername = null;
-        mSocket.disconnect();
-        mSocket.connect();
-        startSignIn();
+
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(getResources().getString(R.string.exist))
+                .setContentText(getResources().getString(R.string.exist_message))
+                .setConfirmText(getResources().getString(R.string.ok_exist))
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+
+                        mUsername = null;
+                        mSocket.disconnect();
+                        mSocket.connect();
+                        startSignIn();
+                    }
+                })
+                .show();
     }
 
     private void scrollToBottom() {

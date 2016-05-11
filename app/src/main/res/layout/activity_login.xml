@@ -45,7 +45,7 @@
         android:layout_above="@id/username_input"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_home" />
 
     <Button
         android:id="@+id/sign_in_button"
