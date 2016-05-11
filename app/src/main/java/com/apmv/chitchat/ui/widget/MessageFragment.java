@@ -37,20 +37,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 /**
  * A chat fragment containing messages view and input form.
  */
-public class MessageFragment extends Fragment {
+public class MessageFragment extends Fragment implements TextView.OnEditorActionListener, TextWatcher, View.OnClickListener {
 
     private static final int REQUEST_LOGIN = 0;
-
     private static final int TYPING_TIMER_LENGTH = 500;
 
-    private RecyclerView mMessagesView;
-    private EditText mInputMessageView;
+    @Bind(R.id.messages)
+    RecyclerView mMessagesView;
+    @Bind(R.id.message_input)
+    EditText mInputMessageView;
+    @Bind(R.id.send_button)
+    ImageView sendButton;
+
     private List<Message> mMessages = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private boolean mTyping = false;
@@ -111,53 +117,15 @@ public class MessageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, getActivity());
 
-        mMessagesView = (RecyclerView) view.findViewById(R.id.messages);
         mMessagesView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMessagesView.setAdapter(mAdapter);
 
-        mInputMessageView = (EditText) view.findViewById(R.id.message_input);
-        mInputMessageView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int id, KeyEvent event) {
-                if (id == R.id.send || id == EditorInfo.IME_NULL) {
-                    attemptSend();
-                    return true;
-                }
-                return false;
-            }
-        });
-        mInputMessageView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        mInputMessageView.setOnEditorActionListener(this);
+        mInputMessageView.addTextChangedListener(this);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (null == mUsername) return;
-                if (!mSocket.connected()) return;
-
-                if (!mTyping) {
-                    mTyping = true;
-                    mSocket.emit("typing");
-                }
-
-                mTypingHandler.removeCallbacks(onTypingTimeout);
-                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        ImageView sendButton = (ImageView) view.findViewById(R.id.send_button);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attemptSend();
-            }
-        });
+        sendButton.setOnClickListener(this);
     }
 
     @Override
@@ -420,5 +388,43 @@ public class MessageFragment extends Fragment {
             mSocket.emit("stop typing");
         }
     };
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == R.id.send || actionId == EditorInfo.IME_NULL) {
+            attemptSend();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (null == mUsername) return;
+        if (!mSocket.connected()) return;
+
+        if (!mTyping) {
+            mTyping = true;
+            mSocket.emit("typing");
+        }
+
+        mTypingHandler.removeCallbacks(onTypingTimeout);
+        mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        attemptSend();
+    }
 }
 
